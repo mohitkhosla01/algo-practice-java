@@ -1,4 +1,4 @@
-package algorithms.strings;
+package strings;
 
 import java.util.ArrayList;
 import java.util.Scanner;

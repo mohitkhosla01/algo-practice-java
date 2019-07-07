@@ -1,4 +1,4 @@
-package algorithms.strings;
+package strings;
 
 import java.util.Comparator;
 public class MissingAlphabetsComparator implements Comparator {
