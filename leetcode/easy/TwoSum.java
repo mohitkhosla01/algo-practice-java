@@ -1,6 +1,5 @@
-package problems;
+package easy;
 
-import java.util.HashSet;
 import java.util.Scanner;
 
 public class TwoSum {
