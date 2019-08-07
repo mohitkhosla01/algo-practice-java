@@ -1,8 +1,5 @@
 package easy;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import definition.ListNode;
 
 public class RemoveDuplicatesFromSortedList {
