@@ -1,23 +1,18 @@
 package medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 public class ThreeSum {
 
 	public static void main(String[] args) {
 
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-
-		int []nums = new int[n];
-
-		for(int i=0; i<n; ++i) {
-			nums[i] = sc.nextInt();
-		}
+		int []nums = {-1, 0, 1, 2, -1, -4};
+		Arrays.sort(nums);
 
 		List<List<Integer>> solSets = new ThreeSum().threeSum(nums);
+		
 		for(int i=0; i<solSets.size(); ++i) {
 			
 			List<Integer> solSet = solSets.get(i);
@@ -33,8 +28,6 @@ public class ThreeSum {
 				System.out.println("[]");
 			}
 		}
-
-		sc.close();
 	}
 
 	public List<List<Integer>> threeSum(int[] nums) {
