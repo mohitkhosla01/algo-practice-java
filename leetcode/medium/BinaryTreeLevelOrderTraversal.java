@@ -1,8 +1,9 @@
 package medium;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import definition.TreeNode;
 
@@ -47,21 +48,19 @@ public class BinaryTreeLevelOrderTraversal {
 		List<List<Integer>> nodeLists = new ArrayList<List<Integer>>();
 
 		if(root != null) {
-			List<TreeNode> currentList = null;
+			Queue<TreeNode> currentList = null;
 			
-			List<TreeNode> nextList = new ArrayList<TreeNode>();
+			Queue<TreeNode> nextList = new LinkedList<TreeNode>();
 			nextList.add(root);
 			
 			do {
 				currentList = nextList;
-				nextList = new ArrayList<TreeNode>();
+				nextList = new LinkedList<TreeNode>();
 				
 				List<Integer> finalList = new ArrayList<Integer>();
 				
-				Iterator<TreeNode> it = currentList.iterator();
-				
-				while(it.hasNext()) {
-					TreeNode node = it.next();
+				while(!currentList.isEmpty()) {
+					TreeNode node = currentList.remove();
 					
 					finalList.add(node.val);
 					if(node.left != null) {
