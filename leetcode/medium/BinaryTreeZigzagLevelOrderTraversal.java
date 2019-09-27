@@ -1,8 +1,8 @@
 package medium;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 
 import definition.TreeNode;
 
@@ -44,7 +44,7 @@ public class BinaryTreeZigzagLevelOrderTraversal {
 		//		root.right.right.left = new TreeNode(15);
 		//		root.right.right.right = new TreeNode(16);
 
-		//		TreeNode root = null;
+		//				TreeNode root = null;
 
 		List<List<Integer>> numLists = new BinaryTreeZigzagLevelOrderTraversal().zigzagLevelOrder(root);
 
@@ -62,23 +62,29 @@ public class BinaryTreeZigzagLevelOrderTraversal {
 
 		if(root != null) {
 
-			List<TreeNode> currentList = null;
-			List<TreeNode> nextLevelList = new ArrayList<TreeNode>();
-			nextLevelList.add(root);
-
 			int direction = 1;
 
-			while(!nextLevelList.isEmpty()) {
+			Stack<TreeNode> currentList = new Stack<TreeNode>();
+			currentList.add(root);
 
-				currentList = nextLevelList;
-				nextLevelList = new ArrayList<TreeNode>();
+			Stack<TreeNode> nextLevelList = new Stack<TreeNode>();
 
-				List<Integer> listToBeAdded = new ArrayList<Integer>();
+			List<Integer> listToBeAdded = new ArrayList<Integer>();
 
-				Iterator<TreeNode> it = currentList.iterator();
-				while(it.hasNext()) {
-					TreeNode node = it.next();
-					listToBeAdded.add(node.val);
+			while(!currentList.isEmpty()) {
+
+				TreeNode node = currentList.pop();
+				listToBeAdded.add(node.val);
+
+				if(direction == -1) {
+					if(node.right != null) {
+						nextLevelList.add(node.right);
+					}
+					if(node.left != null) {
+						nextLevelList.add(node.left);
+					}
+				}
+				else {
 					if(node.left != null) {
 						nextLevelList.add(node.left);
 					}
@@ -87,20 +93,13 @@ public class BinaryTreeZigzagLevelOrderTraversal {
 					}
 				}
 
-				if(direction == 1) {
+				if(currentList.isEmpty()) {
+					currentList = nextLevelList;
+					nextLevelList = new Stack<TreeNode>();
+					direction *= -1;
 					finalLists.add(listToBeAdded);
+					listToBeAdded = new ArrayList<Integer>();
 				}
-				else {
-					List<Integer> listToBeAdded2 = new ArrayList<Integer>();
-
-					for(int i=listToBeAdded.size() - 1; i>=0; --i) {
-						listToBeAdded2.add(listToBeAdded.get(i));
-					}
-
-					finalLists.add(listToBeAdded2);
-				}
-
-				direction *= -1;
 			}
 		}
 
