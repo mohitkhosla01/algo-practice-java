@@ -41,11 +41,11 @@ public class RemoveAllAdjacentDuplicatesInString {
 			
 			for(int i=1; i<L; ++i) {
 				if(ch[i] != '-') {
-					if(prevIndex != -1 && ch[i] == ch[prevIndex]) {
+					if(prevIndex >= 0 && ch[i] == ch[prevIndex]) {
 						duplicateFound = true;
 						ch[i] = '-';
 						ch[prevIndex] = '-';
-						prevIndex = -1;
+						prevIndex -= 1;
 					}
 					else {
 						prevIndex = i;
