@@ -32,6 +32,13 @@ public class IntersectionOfTwoLinkedLists {
 //		headB.next.next.next.next = node42;
 //		headB.next.next.next.next.next = node51;
 		
+		ListNode headA = node41;
+		headA.next = node11;
+		headA.next.next = node81;
+		ListNode headB = node52;
+		headB.next = node01;
+		headB.next.next = node12;
+		
 //		ListNode headA = node41;
 //		ListNode headB = node41;
 		
@@ -41,15 +48,69 @@ public class IntersectionOfTwoLinkedLists {
 //		ListNode headA = null;
 //		ListNode headB = node12;
 		
-		ListNode headA = node12;
-		ListNode headB = null;
+//		ListNode headA = node12;
+//		ListNode headB = null;
 		
 		
-		ListNode intersectionNode = new IntersectionOfTwoLinkedLists().getIntersectionNode(headA, headB);
+		ListNode intersectionNode = new IntersectionOfTwoLinkedLists().getIntersectionNodeSol2(headA, headB);
 		System.out.println(intersectionNode == null ? "null" : intersectionNode.val);
 	}
+	
+	public ListNode getIntersectionNodeSol2(ListNode headA, ListNode headB) {
+		
+		if(headA == null || headB == null) {
+			return null;
+		}
+		
+		ListNode nodeA = headA;
+		ListNode nodeB = headB;
+		
+		while(nodeA != null && nodeB != null) {
+			if(nodeA == nodeB) {
+				return nodeA;
+			}
+			nodeA = nodeA.next;
+			nodeB = nodeB.next;
+		}
+		
+		if(nodeA == null || nodeB == null) {
+			if(nodeA == null) {
+				nodeA = headB;
+			}
+			else {
+				nodeB = headA;
+			}
+			
+			while(nodeA != null && nodeB != null) {
+				if(nodeA == nodeB) {
+					return nodeA;
+				}
+				nodeA = nodeA.next;
+				nodeB = nodeB.next;
+			}
+		}
+		
+		if(nodeA == null || nodeB == null) {
+			if(nodeA == null) {
+				nodeA = headB;
+			}
+			else {
+				nodeB = headA;
+			}
+			
+			while(nodeA != null && nodeB != null) {
+				if(nodeA == nodeB) {
+					return nodeA;
+				}
+				nodeA = nodeA.next;
+				nodeB = nodeB.next;
+			}
+		}
+		
+		return null;
+	}
 
-	public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+	public ListNode getIntersectionNodeSol1(ListNode headA, ListNode headB) {
 
 		Set<ListNode> listAnodes = new HashSet<ListNode>();
 		ListNode nodeA = headA;
