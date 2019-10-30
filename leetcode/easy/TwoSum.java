@@ -1,42 +1,64 @@
 package easy;
 
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TwoSum {
 
 	public static void main(String[] args) {
 		
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
+		int[][] numsArr = {
+				{2,7,11,15},
+				{3,7,5,20,15,4,12,19,9},
+				{3,2,4},
+				{3,3}
+		};
 		
-		int []nums = new int[n];
-		for(int i=0; i<n; ++i) {
-			nums[i] = sc.nextInt();
+		int[] targetArr = {9,28,6,6};
+		
+		for(int i=0; i<numsArr.length; ++i) {
+			int[] ans = new TwoSum().twoSum(numsArr[i], targetArr[i]);
+			System.out.println(ans[0] + " " + ans[1]);
 		}
-		
-		int target = sc.nextInt();
-		int [] ans = new TwoSum().twoSum(nums, target);
-		System.out.println(ans[0] + " " + ans[1]);
-		
-		sc.close();
 	}
 	
-	public int[] twoSum(int[] nums, int target) {
-        
-		int []arr = new int[2];
+	public int[] twoSum_Sol1(int[] nums, int target) { // 1st solution
 		
-		o: for(int i=0; i<nums.length; ++i) {
-			for(int j=0; j<nums.length; ++j) {
-				if(i != j){
-					if(target == (nums[i]+nums[j])) {
-						arr[0] = i;
-						arr[1] = j;
-						break o;
-					}
-				}
+		Map<Integer, Integer> hm = new HashMap<Integer, Integer>();
+		for(int i=0; i<nums.length; ++i) {
+			hm.put(nums[i], i);
+		}
+		
+		int[] ans = new int[2];
+
+		for(int i=0; i<nums.length; ++i) {
+			int val = target - nums[i];
+			if(hm.containsKey(val) && i != hm.get(val)) {
+				ans[0] = i;
+				ans[1] = hm.get(val);
+				break;
 			}
 		}
-        
-        return arr;
+		
+		return ans;
+    }
+	
+	public int[] twoSum(int[] nums, int target) { // 2nd solution
+		
+		int[] ans = new int[2];
+		
+		Map<Integer, Integer> hm = new HashMap<Integer, Integer>();
+		for(int i=0; i<nums.length; ++i) {
+			int val = target - nums[i];
+			if(hm.containsKey(val)) {
+				ans[0] = hm.get(val);
+				ans[1] = i;
+				break;
+			}
+			
+			hm.put(nums[i], i);
+		}
+		
+		return ans;
     }
 }

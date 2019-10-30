@@ -1,68 +1,74 @@
 package medium;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 public class ThreeSum {
 
 	public static void main(String[] args) {
 
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-
-		int []nums = new int[n];
-
-		for(int i=0; i<n; ++i) {
-			nums[i] = sc.nextInt();
-		}
-
-		List<List<Integer>> solSets = new ThreeSum().threeSum(nums);
-		for(int i=0; i<solSets.size(); ++i) {
-			
-			List<Integer> solSet = solSets.get(i);
-			
-			if(solSet.size()>1) {
-				System.out.print("[");
-				for(int j=0; j<solSet.size()-1; ++j) {
-					System.out.print(solSet.get(j)+",");
-				}
-				System.out.println(solSet.get(solSet.size()-1)+"]");
+		// int[] nums = {-1, 0, 1, 2, -1, -4};
+		// int[] nums = {5,9,-5,8,-4,2,1,0,-1,-9,-4};
+		// int[] nums = {-2,0,0,2,2};
+		int[] nums = {-5,-1,-1,6,6};
+		
+		List<List<Integer>> lists = new ThreeSum().threeSum(nums);
+		for(List<Integer> list : lists) {
+			for(Integer val : list) {
+				System.out.print(val + " ");
 			}
-			else {
-				System.out.println("[]");
-			}
+			System.out.println();
 		}
-
-		sc.close();
 	}
 
 	public List<List<Integer>> threeSum(int[] nums) {
 		
-		List<List<Integer>> solSets = new ArrayList<List<Integer>>();
-
-		if(nums.length >= 3) {
-			HashSet<Integer> hs = new HashSet<Integer>();
-			for(int i=0; i<nums.length; ++i) {
-				hs.add(nums[i]);
+		List<List<Integer>> lists = new ArrayList<List<Integer>>();
+		
+		if(nums == null || nums.length < 3) {
+			return lists;
+		}
+		
+		Arrays.sort(nums);
+		
+		for(int i=0; i<nums.length-2; ++i) {
+			
+			if(nums[i] > 0) {
+				break;
 			}
-
-			for(int i=0; i<nums.length; ++i) {
-				for(int j=i+1; j<nums.length; ++j) {
-					if(hs.contains((nums[i] + nums[j]) * -1)) {
-						List<Integer> solSet = new ArrayList<Integer>();
-						solSet.add(nums[i]);
-						solSet.add(nums[j]);
-						solSet.add((nums[i] + nums[j]) * -1);
-						solSets.add(solSet);
-						hs.remove(nums[i]);
-						hs.remove(nums[j]);
-						hs.remove((nums[i] + nums[j]) * -1);
+			if(i != 0 && nums[i] == nums[i-1]) {
+				continue;
+			}
+			
+			int left = i+1;
+			int right = nums.length-1;
+			
+			while(left < right) {
+				
+				if(right != nums.length-1 && nums[right] == nums[right+1]) {
+					--right;
+				}
+				else {
+					int sum = nums[i] + nums[left] + nums[right];
+					if(sum == 0) {
+						List<Integer> list = new ArrayList<Integer>();
+						list.add(nums[i]);
+						list.add(nums[left]);
+						list.add(nums[right]);
+						lists.add(list);
+						++left;
+						--right;
+					}
+					else if(sum < 0) {
+						++left;
+					}
+					else {
+						--right;
 					}
 				}
 			}
 		}
 		
-		return solSets;
+		return lists;
 	}
 }
