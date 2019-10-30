@@ -6,21 +6,50 @@ public class MergeTwoSortedLists {
 
 	public static void main(String[] args) {
 		
-		ListNode l1 = new ListNode(1);
-		l1.next = new ListNode(3);
-		l1.next.next = new ListNode(4);
+//		ListNode l1 = new ListNode(1);
+//		l1.next = new ListNode(3);
+//		l1.next.next = new ListNode(4);
+//		ListNode l2 = new ListNode(1);
+//		l2.next = new ListNode(2);
+//		l2.next.next = new ListNode(4);
 		
-		ListNode l2 = new ListNode(1);
-		l2.next = new ListNode(2);
-		l2.next.next = new ListNode(4);
+//		ListNode l1 = new ListNode(4);
+//		l1.next = new ListNode(5);
+//		l1.next.next = new ListNode(6);
+//		ListNode l2 = new ListNode(1);
+//		l2.next = new ListNode(2);
+//		l2.next.next = new ListNode(3);
 		
 //		ListNode l1 = new ListNode(1);
 //		l1.next = new ListNode(2);
 //		l1.next.next = new ListNode(4);
-//		
 //		ListNode l2 = new ListNode(5);
 //		l2.next = new ListNode(6);
 //		l2.next.next = new ListNode(7);
+		
+//		ListNode l1 = new ListNode(1);
+//		l1.next = new ListNode(2);
+//		l1.next.next = new ListNode(9);
+//		ListNode l2 = new ListNode(5);
+//		l2.next = new ListNode(6);
+//		l2.next.next = new ListNode(7);
+		
+//		ListNode l1 = null;
+//		ListNode l2 = null;
+		
+//		ListNode l1 = null;
+//		ListNode l2 = new ListNode(5);
+//		l2.next = new ListNode(6);
+//		l2.next.next = new ListNode(7);
+		
+//		ListNode l1 = new ListNode(1);
+//		l1.next = new ListNode(2);
+//		l1.next.next = new ListNode(9);
+//		ListNode l2 = null;
+		
+		ListNode l1 = new ListNode(2);
+		ListNode l2 = new ListNode(1);
+
 		
 		ListNode node = new MergeTwoSortedLists().mergeTwoLists(l1, l2);
 		
@@ -31,35 +60,50 @@ public class MergeTwoSortedLists {
 	}
 	
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        
-    	ListNode head = l1;
     	
-    	while(l1.next != null && l2.next != null) {
-    		if((l1.val == l2.val) || (l1.next != null && l1.next.val > l2.val)) {
-    			System.out.println("1st if " + l1.val + " " + l2.val);
-    			ListNode l1copy = l1;
-    			ListNode l2next = l2.next;
-    			l1 = l2;
-    			l1.next = l1copy;
-    			l2 = l2next;
-    		}
-    		else if(l1.next != null && l1.next.val > l2.val) {
-    			System.out.println("2nd if " + l1.val + " " + l2.val);
-    			ListNode l1next = l1.next;
-    			ListNode l2next = l2.next;
-    			l1.next = l2;
-    			l2.next = l1next;
-    			l1 = l2;
-    			l2 = l2next;
-    		}
-    		else if(l1.next != null) {
-    			System.out.println("3rd if " + l1.val + " " + l2.val);
+    	if(l1 == null && l2 == null) {
+    		return null;
+    	}
+    	else if(l2 == null) {
+    		return l1;
+    	}
+    	else if(l1 == null) {
+    		return l2;
+    	}
+    	
+    	ListNode node = null;
+    	if(l1.val < l2.val) {
+    		node = l1;
+    		l1 = l1.next;
+    	}
+    	else {
+    		node = l2;
+    		l2 = l2.next;
+    	}
+    	ListNode head = node;
+    	
+    	while(l1 != null && l2 != null) {
+    		if(l1.val < l2.val) {
+    			node.next = l1;
     			l1 = l1.next;
     		}
+    		else {
+    			node.next = l2;
+    			l2 = l2.next;
+    		}
+    		node = node.next;
     	}
-
-    	if(l2 != null) {
-    		l1 = l2;
+    	
+    	while(l1 != null) {
+    		node.next = l1;
+    		node = node.next;
+    		l1 = l1.next;
+    	}
+    	
+    	while(l2 != null) {
+    		node.next = l2;
+    		node = node.next;
+    		l2 = l2.next;
     	}
     	
     	return head;
