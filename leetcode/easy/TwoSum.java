@@ -43,7 +43,7 @@ public class TwoSum {
 		return ans;
     }
 	
-	public int[] twoSum(int[] nums, int target) { // 2nd solution
+	public int[] twoSum_Sol2(int[] nums, int target) { // 2nd solution
 		
 		int[] ans = new int[2];
 		
@@ -61,4 +61,21 @@ public class TwoSum {
 		
 		return ans;
     }
+	
+	public int[] twoSum(int[] nums, int target) {
+		
+		int[] range = {-1,-1};
+		Map<Integer, Integer> hm = new HashMap<Integer, Integer>();
+		
+		for(int i=0; i<nums.length; ++i) {
+			if(hm.containsKey(target - nums[i])) {
+				range[0] = hm.get(target - nums[i]);
+				range[1] = i;
+				return range;
+			}
+			hm.put(nums[i], i);
+		}
+		
+		return range;
+	}
 }

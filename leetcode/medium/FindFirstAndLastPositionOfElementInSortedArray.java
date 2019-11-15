@@ -65,59 +65,54 @@ public class FindFirstAndLastPositionOfElementInSortedArray {
 	}
 
 	public int[] searchRange(int[] nums, int target) {
-		
+
 		int[] range = {-1, -1};
-		
-		if(nums == null) {
-			return range;
-		}
 
-		int b = 0, e = nums.length - 1;
-		int b1 = 0, e1 = nums.length - 1;
-		boolean leftFound = false;
+		if(nums != null && nums.length > 0) {
+			int begin = 0, end = nums.length - 1;
 
-		while(b <= e) {
-			int mid = (b + e)/2;
+			boolean leftExists = false;
 
-			if(nums[mid] != target) {
-				if(nums[mid] > target) {
-					e = mid - 1;
-					e1 = mid - 1;
-				}
-				else {
-					b = mid + 1;
-					b1 = mid + 1;
-				}
-			}
-			else {
-				if(range[0] == -1) {
-					range[0] = mid;
-				}
-				if(range[1] == -1) {
-					range[1] = mid;
-				}
+			while(begin <= end) {
+				int mid = (begin + end)/2;
 
-				if(!leftFound) {
-					if(mid == 0 || nums[mid-1] != nums[mid]) {
-						leftFound = true;
-						range[0] = mid;
-						b = b1;
-						e = e1;
+				if(nums[mid] == target) {
+
+					if(!leftExists) {
+						if(mid == 0 || nums[mid-1] != target) {
+							if(mid == 0) {
+								range[0] = 0;
+							}
+							else {
+								range[0] = mid;
+							}
+							begin = mid;
+							end = nums.length - 1;
+							leftExists = true;
+						}
+						else {
+							end = mid;
+						}
 					}
 					else {
-						b = b1;
-						e = mid;
+						if(mid == nums.length - 1) {
+							range[1] = nums.length - 1;
+							break;
+						}
+						else if(nums[mid+1] != target) {
+							range[1] = mid;
+							break;
+						}
+						else {
+							begin = mid + 1;
+						}
 					}
 				}
+				else if(nums[mid] > target) {
+					end = mid - 1;
+				}
 				else {
-					if(mid == nums.length - 1 || nums[mid+1] != nums[mid]) {
-						range[1] = mid;
-						break;
-					}
-					else {
-						b = mid + 1;
-						e = e1;
-					}
+					begin = mid + 1;
 				}
 			}
 		}
