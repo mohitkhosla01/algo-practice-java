@@ -1,85 +1,56 @@
 package medium;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import definition.TreeNode;
 
 public class LeastCommonAncestorOfABinaryTree {
 
 	public static void main(String[] args) {
-
-//		TreeNode root = new TreeNode(9);
-//		root.left = new TreeNode(5);
-//		root.right = new TreeNode(1);
-//		root.left.left = new TreeNode(6);
-//		root.left.right = new TreeNode(2);
-//		root.right.left = new TreeNode(0);
-//		root.right.right = new TreeNode(8);
-//		root.left.right.left = new TreeNode(7);
-//		root.left.right.right = new TreeNode(4);
 		
-		TreeNode root = new TreeNode(3);
-		root.left = new TreeNode(5);
-		root.right = new TreeNode(1);
-		root.left.left = new TreeNode(6);
-		root.left.right = new TreeNode(2);
-		root.right.left = new TreeNode(0);
-		root.right.right = new TreeNode(8);
-		root.left.right.left = new TreeNode(7);
-		root.left.right.right = new TreeNode(4);
+		TreeNode node01 = new TreeNode(0);
+		TreeNode node11 = new TreeNode(1);
+		TreeNode node21 = new TreeNode(2);
+		TreeNode node31 = new TreeNode(3);
+		TreeNode node41 = new TreeNode(4);
+		TreeNode node51 = new TreeNode(5);
+		TreeNode node61 = new TreeNode(6);
+		TreeNode node71 = new TreeNode(7);
+		TreeNode node81 = new TreeNode(8);
 		
-		TreeNode p = new TreeNode(5);
-		TreeNode q = new TreeNode(4);
+//		TreeNode root = node51;
+//		root.right = node31;
+		
+		TreeNode root = node31;
+		root.left = node51;
+		root.right = node11;
+		root.left.left = node61;
+		root.left.right = node21;
+		root.right.left = node01;
+		root.right.right = node81;
+		root.left.right.left = node71;
+		root.left.right.right = node41;
+		
+		TreeNode p = node61;
+		TreeNode q = node81;
 		
 		TreeNode lcaNode = new LeastCommonAncestorOfABinaryTree().lowestCommonAncestor(root, p, q);
 		System.out.println(lcaNode.val);
 	}
 
 	public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-
-		List<TreeNode> aNodes = new ArrayList<TreeNode>();
-		List<TreeNode> bNodes = new ArrayList<TreeNode>();
-		TreeNode common = null;
-
-		helper(root, p, aNodes);
-		helper(root, q, bNodes);
-		int i = aNodes.size()-1;
-		int j = bNodes.size()-1;
-		common = aNodes.get(aNodes.size()-1);
-
-		while(i>=0 && j>=0) {
-			if(aNodes.get(i) == bNodes.get(j)) {
-				common = aNodes.get(i);
-				--i;
-				--j;
-			}
-			else {
-				break;
-			}
+		
+		if (root == null || root == p || root == q) {
+			return root;
 		}
-		return common;
-	}
-
-	public boolean helper(TreeNode node, TreeNode x, List<TreeNode> nodes) {
-
-		if(node == null) {
-			return false;
+		if(root.left == null && root.right == null) {
+			return null;
 		}
-		else if(node.val == x.val) {
-			nodes.add(node);
-			return true;
+		
+		TreeNode left = lowestCommonAncestor(root.left, p, q);
+		TreeNode right = lowestCommonAncestor(root.right, p, q);
+		
+		if (left != null && right != null) {
+			return root;
 		}
-		else {
-			boolean leftResult = helper(node.left, x, nodes);
-			boolean rightResult = helper(node.right, x, nodes);
-			if(leftResult || rightResult) {
-				nodes.add(node);
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
+		return left != null ? left : right;
 	}
 }
