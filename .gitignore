@@ -1,5 +1,5 @@
 .metadata
-other
+other/test
 **/*.class
 */.settings
 */.classpath
