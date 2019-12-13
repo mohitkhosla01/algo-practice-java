@@ -13,12 +13,12 @@ public class NumberOfIslands {
 //				{}
 //		};
 
-		char[][] grid = {
-				{'1','1','0','0'},
-				{'0','1','1','0'},
-				{'0','0','1','0'},
-				{'1','0','0','0'},
-		};
+//		char[][] grid = {
+//				{'1','1','0','0'},
+//				{'0','1','1','0'},
+//				{'0','0','1','0'},
+//				{'1','0','0','0'},
+//		};
 		
 //		char[][] grid = {
 //				{'1','1','1','1','0'},
@@ -34,57 +34,55 @@ public class NumberOfIslands {
 //				{'0','0','0','1','1'},
 //		};
 
-//		char[][] grid = {
-//				{'0','0','0','1','1','0','0'},
-//				{'0','1','0','0','1','1','0'},
-//				{'1','1','0','1','0','0','1'},
-//				{'0','0','0','0','0','1','0'},
-//				{'1','1','0','0','0','1','0'},
-//				{'0','0','0','1','0','0','0'}
-//		};
+		char[][] grid = {
+				{'0','0','0','1','1','0','0'},
+				{'0','1','0','0','1','1','0'},
+				{'1','1','0','1','0','0','1'},
+				{'0','0','0','0','0','1','0'},
+				{'1','1','0','0','0','1','0'},
+				{'0','0','0','1','0','0','0'}
+		};
 		
 		System.out.println(new NumberOfIslands().numIslands(grid));
 	}
-
+	
 	public int numIslands(char[][] grid) {
 
-		int islandCount = 0;
-		
-		if(grid == null || grid.length == 0) {
-			return islandCount;
+        int count = 0;
+        
+		if(grid == null) {
+			return count;
 		}
-
-		for(int i=0; i<grid.length; ++i) {
-			for(int j=0; j<grid[0].length; ++j) {
-
-				if(grid[i][j] == '1') {
-					++islandCount;
-					grid[i][j] = '0';
-					helper(grid, i, j);
-				}
-			}
-		}
-
-		return islandCount;
+        
+        for(int i=0; i<grid.length; ++i) {
+            for(int j=0; j<grid[0].length; ++j) {
+                if(grid[i][j] == '1') {
+                    ++count;
+                    grid[i][j] = '0';
+                    helper(grid, i, j);
+                }
+            }
+        }
+        
+        return count;
 	}
-
-	public void helper(char[][] grid, int row, int column) {
-
-		if(column != 0 && grid[row][column-1] == '1') {
-			grid[row][column-1] = '0';
-			helper(grid, row, column-1);
-		}
-		if(row != grid.length && column != grid[0].length-1 && grid[row][column+1] == '1') {
-			grid[row][column+1] = '0';
-			helper(grid, row, column+1);
-		}
-		if(row != 0 && grid[row-1][column] == '1') {
-			grid[row-1][column] = '0';
-			helper(grid, row-1, column);
-		}
-		if(row != grid.length-1 && column != grid[0].length && grid[row+1][column] == '1') {
-			grid[row+1][column] = '0';
-			helper(grid, row+1, column);
-		}
-	}
+    
+    public void helper(char[][] grid, int i, int j) {
+    	if(i != grid.length && j != 0 && grid[i][j-1] == '1') {
+            grid[i][j-1] = '0';
+            helper(grid, i, j-1);
+        }
+        if(i != grid.length && j != grid[0].length-1 && grid[i][j+1] == '1') {
+            grid[i][j+1] = '0';
+            helper(grid, i, j+1);
+        }
+        if(j != grid[0].length && i != 0 && grid[i-1][j] == '1') {
+            grid[i-1][j] = '0';
+            helper(grid, i-1, j);
+        }
+        if(j != grid[0].length && i != grid.length-1 && grid[i+1][j] == '1') {
+            grid[i+1][j] = '0';
+            helper(grid, i+1, j);
+        }
+    }
 }

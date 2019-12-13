@@ -9,16 +9,6 @@ public class IntersectionOfTwoLinkedLists {
 
 	public static void main(String[] args) {
 		
-		ListNode node41 = new ListNode(4);
-		ListNode node11 = new ListNode(1);
-		ListNode node81 = new ListNode(8);
-		ListNode node42 = new ListNode(4);
-		ListNode node51 = new ListNode(5);
-		
-		ListNode node52 = new ListNode(5);
-		ListNode node01 = new ListNode(0);
-		ListNode node12 = new ListNode(1);
-		
 		ListNode node3 = new ListNode(3);
 		ListNode node6 = new ListNode(6);
 		ListNode node9 = new ListNode(9);
